@@ -8,6 +8,7 @@
 #include <platform/SysTick.h>
 #include <platform/VGA.h>
 #include <platform/Random.h>
+#include <platform/Buttons.h>
 
 #include <Drawing.h>
 
