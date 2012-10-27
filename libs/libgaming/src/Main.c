@@ -6,6 +6,7 @@
 #include <platform/LED.h>
 #include <platform/SNES.h>
 #include <platform/SysTick.h>
+#include <platform/Buttons.h>
 #include <platform/VGA.h>
 
 #include <game/Filesystem.h>
@@ -33,6 +34,7 @@ int main()
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
 	
 	InitializeLEDs();
+	InitializeButtons();
 	InitializeSnesController();
 	InitializeRandom();
 	
