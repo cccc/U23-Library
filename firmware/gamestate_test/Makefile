@@ -2,7 +2,7 @@
 TARGET = gamestate_test
 
 # List C source files here.
-CCSOURCES = Game.c Red.c
+CCSOURCES = Game.c Red.c serencode.c
 
 # Additional local static libs to link against
 LIBS = gaming stm32f4xx fatfs sdcard graphics

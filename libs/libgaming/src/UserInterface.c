@@ -42,4 +42,5 @@ void TIM2_IRQHandler(void)
 {
 	HandleSnesTimerIRQ();
 	HandlePushbuttonTimerIRQ();
+	HandleRumbleTimerIRQ();
 }

@@ -2,6 +2,7 @@
 #include <game/Debug.h>
 #include <game/Filesystem.h>
 #include <game/Font.h>
+#include <serencode.h>
 
 #include <stdio.h>
 #include <string.h>
@@ -36,10 +37,23 @@ int myframe = 0;
 
 void Update(uint32_t delta)
 {
+	static uint8_t cycle = 0;
+	printf("Soll: %d\r\n", cycle);
 	snes_button_state_t state = GetControllerState1();
 	myframe++;
 	if (state.buttons.Up)
 		ChangeState(&RedState);
+	if (state.buttons.Down)
+	{
+		RumbleSetDutyCycle(cycle);
+		printf("Soll: %d\r\n", cycle);
+		cycle++;
+		cycle = cycle % 100;
+	}
+
+	se_start_frame(4);
+	se_puti16(cycle);
+	se_puti16(RumbleCounter);
 }
 
 void Draw(Bitmap* surface)

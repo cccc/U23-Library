@@ -1,4 +1,8 @@
 #include <platform/Rumble.h>
+#include <stdio.h>
+
+uint8_t _dutyCycle = 0;
+uint8_t RumbleCounter = 0;
 
 void InitializeRumble()
 {
@@ -13,6 +17,12 @@ void InitializeRumble()
 	GPIO_InitStructure.GPIO_Pin = GPIO_RUMBLE_PIN;
 
 	GPIO_Init(GPIO_RUMBLE_PORT, &GPIO_InitStructure);
+	GPIO_ResetBits(GPIO_RUMBLE_PORT, GPIO_RUMBLE_PIN);
+}
+
+void RumbleSetDutyCycle(uint8_t dutycycle)
+{
+	_dutyCycle = dutycycle;
 }
 
 void EnableRumble()
@@ -23,4 +33,22 @@ void EnableRumble()
 void DisableRumble()
 {
 	GPIO_ResetBits(GPIO_RUMBLE_PORT, GPIO_RUMBLE_PIN);
+}
+
+void HandleRumbleTimerIRQ() {
+	if (_dutyCycle >= 0)
+	{
+		if (_dutyCycle > 100) {
+			_dutyCycle = 100;
+		}
+
+		if (_dutyCycle > RumbleCounter) {
+			GPIO_SetBits(GPIO_RUMBLE_PORT, GPIO_RUMBLE_PIN);
+		} else {
+		 	GPIO_ResetBits(GPIO_RUMBLE_PORT, GPIO_RUMBLE_PIN);
+		}
+
+		RumbleCounter++;
+		RumbleCounter % 100;
+	}
 }
